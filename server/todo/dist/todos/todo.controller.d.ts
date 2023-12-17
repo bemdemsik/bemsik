@@ -1,6 +1,6 @@
-import { TodoService } from "./todo.service";
-import { CreateTodo } from "./dto/create-todo.dto";
-import { ChangeTodo } from "./dto/change-todo.dto";
+import { TodoService } from './todo.service';
+import { CreateTodo } from './dto/create-todo.dto';
+import { ChangeTodo } from './dto/change-todo.dto';
 export declare class TodoController {
     private readonly todoService;
     constructor(todoService: TodoService);

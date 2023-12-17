@@ -1,0 +1,16 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+.nav-link {
+    text-decoration: none;
+    contain-intrinsic-size: none;
+    text-align: center;
+    color: black;
+}
+.nav-link:hover {
+    background-color: darkgray;
+}
+.nav-link:active {
+    background-color: darkgray;
+}

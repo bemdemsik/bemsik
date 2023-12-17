@@ -27,7 +27,7 @@ let TodoService = class TodoService {
         return this.todoModel.findOne({
             where: {
                 id,
-            }
+            },
         });
     }
     create(createTodo) {
@@ -38,7 +38,7 @@ let TodoService = class TodoService {
     }
     update(id, changeTodo) {
         return this.todoModel.update({
-            ...changeTodo
+            ...changeTodo,
         }, {
             where: {
                 id,

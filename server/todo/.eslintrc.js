@@ -15,8 +15,13 @@ module.exports = {
     node: true,
     jest: true,
   },
+
   ignorePatterns: ['.eslintrc.js'],
   rules: {
+    "prettier/prettier": "error",
+    "react/prop-types": 0,
+    "no-unused-vars": "off",
+    "no-undef": "off",
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',

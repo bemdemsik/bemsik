@@ -1,6 +1,6 @@
-import { Todo } from "./models/todo.model";
-import { CreateTodo } from "./dto/create-todo.dto";
-import { ChangeTodo } from "./dto/change-todo.dto";
+import { Todo } from './models/todo.model';
+import { CreateTodo } from './dto/create-todo.dto';
+import { ChangeTodo } from './dto/change-todo.dto';
 export declare class TodoService {
     private todoModel;
     constructor(todoModel: typeof Todo);

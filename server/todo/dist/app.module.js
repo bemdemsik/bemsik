@@ -13,6 +13,7 @@ const sequelize_1 = require("@nestjs/sequelize");
 const config_1 = require("@nestjs/config");
 const sequelizeConfig_service_1 = require("./config/sequelizeConfig.service");
 const configuration_1 = require("./config/configuration");
+const user_module_1 = require("./users/user.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,6 +28,7 @@ exports.AppModule = AppModule = __decorate([
                 load: [configuration_1.databaseConfig],
             }),
             todo_module_1.TodoModule,
+            user_module_1.UserModule,
         ],
     })
 ], AppModule);

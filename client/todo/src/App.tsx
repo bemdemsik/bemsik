@@ -1,29 +1,33 @@
-import {useDispatch} from "react-redux";
-import {useEffect} from "react";
-import {Header} from "./components/Header/Header";
-import {TodoForm} from "./components/TodoForm/TodoForm";
-import {TodoList} from "./components/TodoList/TodoList";
-import {getTodos} from "./redux/Actions";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from 'react-router-dom';
+import {Header} from "./components/todos/Header/Header";
+import { ShowUsers } from './components/users/ShowUsers/ShowUsers';
+import { ShowTodos } from './components/todos/ShowTodos/ShowTodos';
+import { Navigation } from './components/navigation/navigation';
 import './App.css'
 
 function App() {
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getTodos())
-    }, [])
   return (
-    <>
+    <div>
       <Header />
-      <main>
-        <section>
-          <div className="container pt-3">
-            <TodoForm />
-            <h2 className="pt-3">Новые дела</h2>
-              <TodoList />
+      <div className={'container'}>
+        <Router>
+          <div className={'columnNav'}>
+            <Navigation />
           </div>
-        </section>
-      </main>
-    </>
+          <div className={'columnApp'}>
+            <Routes>
+              <Route path={'/users'} element={<ShowUsers/>}/>
+              <Route path={'/todos'} element={<ShowTodos/>}/>
+            </Routes>
+          </div>
+        </Router>
+      </div>
+    </div>
   );
 }
 
