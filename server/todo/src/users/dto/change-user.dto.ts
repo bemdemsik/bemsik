@@ -8,7 +8,4 @@ export class ChangeUser {
 
   @IsNotEmpty()
   readonly password: string;
-
-  @IsNotEmpty()
-  readonly role: string;
 }

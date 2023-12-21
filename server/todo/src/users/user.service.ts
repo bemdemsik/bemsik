@@ -13,10 +13,17 @@ export class UserService {
   async findAll(): Promise<User[]> {
     return this.userModel.findAll();
   }
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string): Promise<User | null> {
     return this.userModel.findOne({
       where: {
         id,
+      },
+    });
+  }
+  async findOneByName(name: string): Promise<User | null> {
+    return this.userModel.findOne({
+      where: {
+        name,
       },
     });
   }
@@ -25,7 +32,6 @@ export class UserService {
     user.name = createUser.name;
     user.email = createUser.email;
     user.password = createUser.password;
-    user.role = createUser.role;
     return user.save();
   }
 

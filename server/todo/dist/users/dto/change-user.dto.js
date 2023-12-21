@@ -26,8 +26,4 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], ChangeUser.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], ChangeUser.prototype, "role", void 0);
 //# sourceMappingURL=change-user.dto.js.map

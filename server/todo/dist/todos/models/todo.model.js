@@ -19,6 +19,10 @@ __decorate([
     __metadata("design:type", String)
 ], Todo.prototype, "title", void 0);
 __decorate([
+    sequelize_typescript_1.Column,
+    __metadata("design:type", String)
+], Todo.prototype, "userId", void 0);
+__decorate([
     (0, sequelize_typescript_1.Column)({ defaultValue: false }),
     __metadata("design:type", Boolean)
 ], Todo.prototype, "done", void 0);

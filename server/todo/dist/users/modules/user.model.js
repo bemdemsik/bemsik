@@ -26,10 +26,6 @@ __decorate([
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
-__decorate([
-    sequelize_typescript_1.Column,
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
 exports.User = User = __decorate([
     sequelize_typescript_1.Table
 ], User);

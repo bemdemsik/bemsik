@@ -1,6 +1,6 @@
 import {ICompleteAction, ICreateAction, IDeleteAction, IEditAction, ITodo, ITodoActionsTypes} from "../../types/types";
 import {call, Effect, put, takeEvery} from "redux-saga/effects";
-import {TodoApi} from "../../api";
+import {TodoApi} from "../../api/todo";
 import {hideAlert, showAlert} from "../Actions";
 
 const delay = (time: number) => new Promise(resolve => setTimeout(resolve, time))

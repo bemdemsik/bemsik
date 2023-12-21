@@ -1,22 +1,14 @@
-import {ITodo, ITodoState} from "../types/types";
 import axios from 'axios'
-export class TodoApi {
-    static async getTodos(): Promise<ITodoState[]> {
-        const res = await axios.get('http://localhost:3333/todos');
-        return res.data;
+import { parseCookies } from 'nookies';
+
+axios.defaults.baseURL = 'http://localhost:3333'
+
+axios.interceptors.request.use((config) => {
+    if(typeof window !== 'undefined') {
+        const { _token } = parseCookies();
+
+        config.headers.Authorization='Bearer ' + _token;
     }
-    static async createTodo(todo: Partial<ITodo>): Promise<ITodoState[]> {
-        const res = await axios.post('http://localhost:3333/todos', todo);
-        return res.data;
-    }
-    static async deleteTodo(id: string): Promise<void> {
-        await axios.delete(`http://localhost:3333/todos/${id}`);
-    }
-    static async completeTodo(todo: Partial<ITodo>): Promise<void> {
-        await axios.patch(`http://localhost:3333/todos/${todo.id}`, todo);
-    }
-    static async editTodo(todo: Partial<ITodo>): Promise<ITodo> {
-        const res = await axios.patch(`http://localhost:3333/todos/${todo.id}`, todo);
-        return res.data[1][0];
-    }
-}
+    return config;
+});
+export default axios

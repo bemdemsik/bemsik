@@ -20,6 +20,10 @@ __decorate([
 ], ChangeTodo.prototype, "title", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], ChangeTodo.prototype, "userId", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], ChangeTodo.prototype, "done", void 0);

@@ -14,6 +14,8 @@ const config_1 = require("@nestjs/config");
 const sequelizeConfig_service_1 = require("./config/sequelizeConfig.service");
 const configuration_1 = require("./config/configuration");
 const user_module_1 = require("./users/user.module");
+const token_module_1 = require("./token/token.module");
+const authorization_module_1 = require("./authorization/authorization.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,8 +29,10 @@ exports.AppModule = AppModule = __decorate([
             config_1.ConfigModule.forRoot({
                 load: [configuration_1.databaseConfig],
             }),
-            todo_module_1.TodoModule,
             user_module_1.UserModule,
+            todo_module_1.TodoModule,
+            token_module_1.TokenModule,
+            authorization_module_1.AuthorizationModule,
         ],
     })
 ], AppModule);

@@ -1,0 +1,1 @@
+{"version":3,"file":"token.service.js","sourceRoot":"","sources":["../../src/token/token.service.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AAAA,iDAAgD;AAChD,2CAA4C;AAC5C,sDAA6C;AAEtC,IAAM,YAAY,GAAlB,MAAM,YAAY;IACvB,YAEU,UAAwB;QAAxB,eAAU,GAAV,UAAU,CAAc;IAC/B,CAAC;CACL,CAAA;AALY,oCAAY;uBAAZ,YAAY;IADxB,IAAA,mBAAU,GAAE;IAGR,WAAA,IAAA,uBAAW,EAAC,mBAAK,CAAC,CAAA;;GAFV,YAAY,CAKxB"}

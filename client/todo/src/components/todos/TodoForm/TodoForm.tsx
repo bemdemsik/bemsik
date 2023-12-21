@@ -1,12 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { createTodo, getTodos, showAlert } from '../../../redux/Actions';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { createTodo, showAlert } from '../../../redux/Actions';
 import {IAlertReducer} from "../../../types/types";
 import {Alert} from "../Alert/alert";
-import { TodoList } from '../TodoList/TodoList';
 
 export const TodoForm = () => {
-    const [title, setTitle] = useState<string>("")
+    const [title, setTitle] = useState<string>('')
 
     const dispatch = useDispatch()
     const alertState = useSelector((state: IAlertReducer) => state.alertReducer)
@@ -17,7 +16,7 @@ export const TodoForm = () => {
             return
         }
         dispatch(createTodo(title))
-        setTitle("")
+        setTitle('')
     }
 
     const handleChangeInputValue = (event: ChangeEvent<HTMLInputElement>) => {

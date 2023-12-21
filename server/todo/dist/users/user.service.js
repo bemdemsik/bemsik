@@ -30,12 +30,18 @@ let UserService = class UserService {
             },
         });
     }
+    async findOneByName(name) {
+        return this.userModel.findOne({
+            where: {
+                name,
+            },
+        });
+    }
     create(createUser) {
         const user = new user_model_1.User();
         user.name = createUser.name;
         user.email = createUser.email;
         user.password = createUser.password;
-        user.role = createUser.role;
         return user.save();
     }
     update(id, changeUser) {

@@ -8,7 +8,4 @@ export class CreateUser {
 
   @IsNotEmpty()
   readonly password: string;
-
-  @IsNotEmpty()
-  readonly role: string;
 }

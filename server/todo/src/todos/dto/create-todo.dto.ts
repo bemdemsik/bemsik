@@ -4,6 +4,9 @@ export class CreateTodo {
   readonly title: string;
 
   @IsNotEmpty()
+  readonly userId: string;
+
+  @IsNotEmpty()
   @IsBoolean()
   readonly done: boolean;
 }
