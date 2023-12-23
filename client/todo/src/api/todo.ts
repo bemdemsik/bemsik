@@ -1,23 +1,23 @@
 import { ITodo, ITodoState } from '../types/types';
-import axios from './index';
+import $api from './index';
 
 export class TodoApi {
   static async getTodos(): Promise<ITodoState[]> {
-    const res = await axios.get('/todos');
+    const res = await $api.get('/todos');
     return res.data;
   }
   static async createTodo(todo: Partial<ITodo>): Promise<ITodoState[]> {
-    const res = await axios.post('/todos', todo);
+    const res = await $api.post('/todos', todo);
     return res.data;
   }
   static async deleteTodo(id: string): Promise<void> {
-    await axios.delete(`/todos/${id}`);
+    await $api.delete(`/todos/${id}`);
   }
   static async completeTodo(todo: Partial<ITodo>): Promise<void> {
-    await axios.patch(`/todos/${todo.id}`, todo);
+    await $api.patch(`/todos/${todo.id}`, todo);
   }
   static async editTodo(todo: Partial<ITodo>): Promise<ITodo> {
-    const res = await axios.patch(`/todos/${todo.id}`, todo);
+    const res = await $api.patch(`/todos/${todo.id}`, todo);
     return res.data[1][0];
   }
 }

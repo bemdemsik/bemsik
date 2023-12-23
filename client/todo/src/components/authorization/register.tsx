@@ -7,15 +7,15 @@ import { setCookie } from 'nookies';
 export const Register: FC = () => {
   const onSubmit = async (values: RegisterDTO) => {
     try {
-      const { token } = await AuthApi.register(values);
+      const { refreshToken } = await AuthApi.register(values);
 
       notification.success({
         message: "Успешно",
         description: "Переходим на главную страницу ...",
-        duration: 2,
+        duration: 5,
       });
 
-      setCookie(null, "_token", token, {
+      setCookie(null, "_token", refreshToken, {
         path: '/'
       });
       window.location.href = '/todos'
@@ -24,7 +24,7 @@ export const Register: FC = () => {
       notification.error({
         message: "Ошибка",
         description: "" + err,
-        duration: 2,
+        duration: 5,
       });
     }
   }

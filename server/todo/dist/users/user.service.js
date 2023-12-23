@@ -30,10 +30,10 @@ let UserService = class UserService {
             },
         });
     }
-    async findOneByName(name) {
+    async findOneByEmail(email) {
         return this.userModel.findOne({
             where: {
-                name,
+                email: email,
             },
         });
     }

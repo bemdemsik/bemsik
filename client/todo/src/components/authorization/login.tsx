@@ -7,16 +7,18 @@ import { setCookie } from 'nookies';
 export const Login: FC = () => {
   const onSubmit = async (values: LoginDTO) => {
     try {
-      const { token } = await AuthApi.login(values);
+      const { refreshToken,accessToken } = await AuthApi.login(values);
 
       notification.success({
         message: "Успешно",
         description: "Переходим на главную страницу ...",
-        duration: 2,
+        duration: 5,
       });
 
-      setCookie(null, "_token", token, {
-        path: '/'
+      localStorage.setItem('accessToken', accessToken);
+
+      setCookie(null, "_token", refreshToken, {
+         path: '/'
       });
       window.location.href = '/todos'
     }catch (err){
@@ -24,7 +26,7 @@ export const Login: FC = () => {
       notification.error({
         message: "Ошибка",
         description: "Неверный логин или пароль",
-        duration: 2,
+        duration: 5,
       });
     }
   }
@@ -38,8 +40,8 @@ export const Login: FC = () => {
       onFinish={onSubmit}
       >
         <Form.Item
-          label = "Name"
-          name = "name"
+          label = "Email"
+          name = "email"
           rules={[
             {
               required: true,

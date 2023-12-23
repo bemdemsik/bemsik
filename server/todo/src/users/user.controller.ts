@@ -1,21 +1,19 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Header,
   HttpCode,
   HttpStatus,
   Param,
-  Patch,
-  Post, UseGuards,
+  Post,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUser } from './dto/create-user.dto';
-import { JwtAuthGuard } from '../authorization/guards/jwt.duard';
-
+import { AuthMiddleware } from '../middlewares/middlewares-auth';
 @Controller('users')
-@UseGuards(JwtAuthGuard)
+@UseInterceptors(AuthMiddleware)
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get()
@@ -23,8 +21,7 @@ export class UserController {
     return this.userService.findAll();
   }
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
-  getOneUser(@Param('id') id: string) {
+  getOneUser(@Param('id') id: number) {
     return this.userService.findOne(id);
   }
 

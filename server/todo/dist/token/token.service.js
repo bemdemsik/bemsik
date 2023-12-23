@@ -16,9 +16,46 @@ exports.TokenService = void 0;
 const sequelize_1 = require("@nestjs/sequelize");
 const common_1 = require("@nestjs/common");
 const token_model_1 = require("./models/token.model");
+const jwt = require("jsonwebtoken");
 let TokenService = class TokenService {
     constructor(tokenModel) {
         this.tokenModel = tokenModel;
+    }
+    async saveToken(userId, refreshToken) {
+        const tokenData = await this.tokenModel.findOne({
+            where: {
+                userId: userId,
+            },
+        });
+        if (tokenData) {
+            tokenData.refreshToken = refreshToken;
+            return tokenData.save();
+        }
+        const createToken = await this.tokenModel.create({
+            userId: userId,
+            refreshToken,
+        });
+        return createToken.save();
+    }
+    async removeToken(refreshToken) {
+        const tokenData = await this.tokenModel.destroy({
+            where: {
+                refreshToken,
+            },
+        });
+        return tokenData;
+    }
+    generateToken(name, email) {
+        const accessToken = jwt.sign({ name, email }, 'dslkjngdfng', {
+            expiresIn: '5m',
+        });
+        const refreshToken = jwt.sign({ name, email }, 'sdfdsfsdfdsfdsfsdfsdfsdfsdfgg', {
+            expiresIn: '30d',
+        });
+        return {
+            accessToken,
+            refreshToken,
+        };
     }
 };
 exports.TokenService = TokenService;

@@ -20,6 +20,7 @@ exports.TokenModule = TokenModule = __decorate([
         imports: [sequelize_1.SequelizeModule.forFeature([token_model_1.Token])],
         providers: [token_service_1.TokenService],
         controllers: [token_controller_1.TokenController],
+        exports: [token_service_1.TokenService],
     })
 ], TokenModule);
 //# sourceMappingURL=token.module.js.map

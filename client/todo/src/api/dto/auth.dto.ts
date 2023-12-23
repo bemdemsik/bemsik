@@ -1,10 +1,12 @@
 export interface LoginDTO {
-  name: string;
+  email: string;
   password: string;
 }
 
 export interface LoginResponse {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
+  id: number;
 }
 export type RegisterDTO = LoginDTO & { email: string };
 export type RegisterResponse = LoginResponse;

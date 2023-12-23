@@ -1,11 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import './styles.css'
 import { setCookie } from 'nookies';
+import { AuthApi } from '../../api/auth';
 export const Navigation = () => {
-  const qwe = () => {
-    setCookie(null, "_token", '', {
-      path: '/'
-    });
+  const logout = async () => {
+    await AuthApi.logout();
     window.location.href = '../'
   }
   return (
@@ -17,7 +16,7 @@ export const Navigation = () => {
         <NavLink to='/todos' className={'nav-link'}>Список дел</NavLink>
       </div>
       <div className={'item'}>
-        <div onClick={qwe} className={'nav-link'}>Выход</div>
+        <div onClick={logout} className={'nav-link'}>Выход</div>
       </div>
     </div>
   )

@@ -16,34 +16,61 @@ exports.AuthorizationController = void 0;
 const common_1 = require("@nestjs/common");
 const authorization_service_1 = require("./authorization.service");
 const create_user_dto_1 = require("../users/dto/create-user.dto");
-const local_guar_1 = require("./guards/local.guar");
+const user_dto_1 = require("../users/dto/user-dto");
 let AuthorizationController = class AuthorizationController {
     constructor(authorizationService) {
         this.authorizationService = authorizationService;
     }
-    async login(req) {
-        return this.authorizationService.login(req.user);
+    async login(req, res, dto) {
+        const userData = await this.authorizationService.login(dto);
+        res.cookie('refreshToken', userData.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        return res.json(userData);
     }
-    async register(dto) {
-        return this.authorizationService.register(dto);
+    async register(req, res, dto) {
+        const userData = await this.authorizationService.register(dto);
+        res.cookie('refreshToken', userData.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        return res.json(userData);
+    }
+    async logout(req, res) {
+        const { refreshToken } = req.cookies;
+        const token = await this.authorizationService.logout(refreshToken);
+        res.clearCookie('refreshToken');
+        return res.json(token);
     }
 };
 exports.AuthorizationController = AuthorizationController;
 __decorate([
-    (0, common_1.UseGuards)(local_guar_1.LocalAuthGuard),
     (0, common_1.Post)('login'),
-    __param(0, (0, common_1.Request)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object, user_dto_1.UserDTO]),
     __metadata("design:returntype", Promise)
 ], AuthorizationController.prototype, "login", null);
 __decorate([
     (0, common_1.Post)('register'),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUser]),
+    __metadata("design:paramtypes", [Object, Object, create_user_dto_1.CreateUser]),
     __metadata("design:returntype", Promise)
 ], AuthorizationController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('logout'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthorizationController.prototype, "logout", null);
 exports.AuthorizationController = AuthorizationController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [authorization_service_1.AuthorizationService])

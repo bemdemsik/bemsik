@@ -10,14 +10,15 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
+  UseGuards, UseInterceptors,
 } from '@nestjs/common';
 import { CreateTodo } from './dto/create-todo.dto';
 import { ChangeTodo } from './dto/change-todo.dto';
 import { JwtAuthGuard } from '../authorization/guards/jwt.duard';
+import { AuthMiddleware } from '../middlewares/middlewares-auth';
 
 @Controller('todos')
-@UseGuards(JwtAuthGuard)
+@UseInterceptors(AuthMiddleware)
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 

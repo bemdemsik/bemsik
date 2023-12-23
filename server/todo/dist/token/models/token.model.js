@@ -15,18 +15,13 @@ let Token = class Token extends sequelize_typescript_1.Model {
 };
 exports.Token = Token;
 __decorate([
-    sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.Column,
-    __metadata("design:type", String)
-], Token.prototype, "id", void 0);
-__decorate([
-    sequelize_typescript_1.Column,
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], Token.prototype, "userId", void 0);
 __decorate([
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
-], Token.prototype, "tokenRefresh", void 0);
+], Token.prototype, "refreshToken", void 0);
 exports.Token = Token = __decorate([
     sequelize_typescript_1.Table
 ], Token);

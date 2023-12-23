@@ -13,17 +13,17 @@ export class UserService {
   async findAll(): Promise<User[]> {
     return this.userModel.findAll();
   }
-  async findOne(id: string): Promise<User | null> {
+  async findOne(id: number): Promise<User | null> {
     return this.userModel.findOne({
       where: {
         id,
       },
     });
   }
-  async findOneByName(name: string): Promise<User | null> {
+  async findOneByEmail(email: string): Promise<User | null> {
     return this.userModel.findOne({
       where: {
-        name,
+        email: email,
       },
     });
   }
@@ -36,7 +36,7 @@ export class UserService {
   }
 
   update(
-    id: string,
+    id: number,
     changeUser: ChangeUser,
   ): Promise<[affectedCount: number, affectedRows: User[]]> {
     return this.userModel.update(
@@ -51,7 +51,7 @@ export class UserService {
       },
     );
   }
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     const user = await this.findOne(id);
     await user.destroy();
   }

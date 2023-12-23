@@ -30,7 +30,7 @@ function* sagaDeleteTodo(action: IDeleteAction): Generator<Effect, void> {
         yield call(delay, 3000)
         yield put(hideAlert())
     } catch (error) {
-        yield put(showAlert('Не удалось удалить дело','warning'))
+        yield put(showAlert('Не удалось удалить дело', 'warning'))
     }
 }
 function* sagaGetTodos(): Generator<Effect, void, ITodo[]> {
