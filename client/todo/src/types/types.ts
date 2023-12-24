@@ -17,8 +17,17 @@ export interface ITodo {
     title: string;
     done: boolean;
 }
+export interface IUser {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+}
 export interface ITodoState {
     todos: ITodo[];
+}
+export interface IUserState {
+    users: IUser[];
 }
 export interface IAlertState {
     alertText: string
@@ -26,6 +35,9 @@ export interface IAlertState {
 }
 export interface ITodoReducer {
     todoReducer: ITodoState
+}
+export interface IUserReducer {
+    userReducer: IUserState
 }
 export interface IAlertReducer {
     alertReducer: IAlertState

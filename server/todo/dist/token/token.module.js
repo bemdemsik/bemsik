@@ -12,12 +12,13 @@ const sequelize_1 = require("@nestjs/sequelize");
 const token_model_1 = require("./models/token.model");
 const token_service_1 = require("./token.service");
 const token_controller_1 = require("./token.controller");
+const config_1 = require("@nestjs/config");
 let TokenModule = class TokenModule {
 };
 exports.TokenModule = TokenModule;
 exports.TokenModule = TokenModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([token_model_1.Token])],
+        imports: [sequelize_1.SequelizeModule.forFeature([token_model_1.Token]), config_1.ConfigModule],
         providers: [token_service_1.TokenService],
         controllers: [token_controller_1.TokenController],
         exports: [token_service_1.TokenService],

@@ -16,7 +16,6 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
-const jwt_duard_1 = require("../authorization/guards/jwt.duard");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -40,10 +39,9 @@ __decorate([
 ], UserController.prototype, "getAllUser", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, common_1.UseGuards)(jwt_duard_1.JwtAuthGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getOneUser", null);
 __decorate([
@@ -57,7 +55,6 @@ __decorate([
 ], UserController.prototype, "createUser", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('users'),
-    (0, common_1.UseGuards)(jwt_duard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);
 //# sourceMappingURL=user.controller.js.map

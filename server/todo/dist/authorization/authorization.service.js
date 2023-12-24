@@ -31,7 +31,7 @@ let AuthorizationService = class AuthorizationService {
     async register(dto) {
         try {
             if (await this.userService.findOneByEmail(dto.email)) {
-                throw new common_1.ForbiddenException('Пользователь с таким email уже существует');
+                throw new common_1.UnauthorizedException('Пользователь с таким email уже существует');
             }
             const user = new user_model_1.User();
             user.name = dto.name;
@@ -44,18 +44,14 @@ let AuthorizationService = class AuthorizationService {
                 ...tokens,
                 id: user.id,
             };
-            console.log(payload);
             return payload;
         }
         catch (err) {
-            console.log(err);
-            throw new common_1.ForbiddenException('Ошибка при регистрации');
+            throw new common_1.UnauthorizedException('Ошибка при регистрации');
         }
     }
     async login(user) {
-        console.log(user);
         const userData = await this.userService.findOneByEmail(user.email);
-        console.log(user, userData);
         if (!userData) {
             throw new common_1.UnauthorizedException('Пользователь с таким email не найден');
         }
@@ -68,12 +64,28 @@ let AuthorizationService = class AuthorizationService {
             ...tokens,
             id: userData.id,
         };
-        console.log(payload);
         return payload;
     }
     async logout(refreshToken) {
         const token = await this.tokenService.removeToken(refreshToken);
         return token;
+    }
+    async refresh(refreshToken) {
+        if (!refreshToken)
+            throw new common_1.UnauthorizedException('Вы не авторизованы');
+        const userData = this.tokenService.validateRefreshToken(refreshToken);
+        const tokenFromDatabase = await this.tokenService.findToken(refreshToken);
+        if (!userData || !tokenFromDatabase) {
+            throw new common_1.UnauthorizedException('Вы не авторизованы');
+        }
+        const user = await this.userService.findOne(tokenFromDatabase.id);
+        const tokens = this.tokenService.generateToken(user.name, user.email);
+        await this.tokenService.saveToken(user.id, tokens.refreshToken);
+        const payload = {
+            ...tokens,
+            id: user.id,
+        };
+        return payload;
     }
 };
 exports.AuthorizationService = AuthorizationService;

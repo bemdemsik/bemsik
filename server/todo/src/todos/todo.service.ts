@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Todo } from './models/todo.model';
 import { CreateTodo } from './dto/create-todo.dto';
 import { ChangeTodo } from './dto/change-todo.dto';
+import { JwtAuthGuard } from '../authorization/guards/jwt.duard';
 
 @Injectable()
 export class TodoService {

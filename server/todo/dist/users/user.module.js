@@ -12,12 +12,28 @@ const user_controller_1 = require("./user.controller");
 const user_service_1 = require("./user.service");
 const sequelize_1 = require("@nestjs/sequelize");
 const user_model_1 = require("./modules/user.model");
+const token_module_1 = require("../token/token.module");
+const passport_1 = require("@nestjs/passport");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([user_model_1.User])],
+        imports: [
+            sequelize_1.SequelizeModule.forFeature([user_model_1.User]),
+            token_module_1.TokenModule,
+            passport_1.PassportModule,
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                useFactory: (configService) => ({
+                    secret: configService.get('JWT_REFRESH_SECRET_KEY'),
+                    signOptions: { expiresIn: configService.get('EXPIRES_IN') },
+                }),
+                inject: [config_1.ConfigService],
+            }),
+        ],
         providers: [user_service_1.UserService],
         controllers: [user_controller_1.UserController],
         exports: [user_service_1.UserService],

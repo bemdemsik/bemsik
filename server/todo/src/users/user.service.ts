@@ -21,11 +21,13 @@ export class UserService {
     });
   }
   async findOneByEmail(email: string): Promise<User | null> {
-    return this.userModel.findOne({
+    const qwe = await this.userModel.findOne({
       where: {
         email: email,
       },
     });
+    console.log(qwe);
+    return qwe;
   }
   create(createUser: CreateUser): Promise<User> {
     const user = new User();

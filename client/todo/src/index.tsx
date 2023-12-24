@@ -22,7 +22,7 @@ const root = ReactDOM.createRoot(
 const token  = parseCookies()._token;
 root.render(
   <Provider store = {store}>
-    {!token
+    {!token || token === '' || token === undefined || token === null
       ? <Authorization />
       : <App />
     }

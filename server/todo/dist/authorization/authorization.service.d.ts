@@ -17,5 +17,10 @@ export declare class AuthorizationService {
         accessToken: string;
         refreshToken: string;
     }>;
-    logout(refreshToken: any): Promise<number>;
+    logout(refreshToken: string): Promise<number>;
+    refresh(refreshToken: string): Promise<{
+        id: any;
+        accessToken: string;
+        refreshToken: string;
+    }>;
 }

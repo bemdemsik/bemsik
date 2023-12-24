@@ -12,14 +12,29 @@ const sequelize_1 = require("@nestjs/sequelize");
 const todo_model_1 = require("./models/todo.model");
 const todo_service_1 = require("./todo.service");
 const todo_controller_1 = require("./todo.controller");
+const passport_1 = require("@nestjs/passport");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let TodoModule = class TodoModule {
 };
 exports.TodoModule = TodoModule;
 exports.TodoModule = TodoModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([todo_model_1.Todo])],
+        imports: [
+            sequelize_1.SequelizeModule.forFeature([todo_model_1.Todo]),
+            passport_1.PassportModule,
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                useFactory: (configService) => ({
+                    secret: configService.get('JWT_REFRESH_SECRET_KEY'),
+                    signOptions: { expiresIn: configService.get('EXPIRES_IN') },
+                }),
+                inject: [config_1.ConfigService],
+            }),
+        ],
         providers: [todo_service_1.TodoService],
         controllers: [todo_controller_1.TodoController],
+        exports: [todo_service_1.TodoService],
     })
 ], TodoModule);
 //# sourceMappingURL=todo.module.js.map

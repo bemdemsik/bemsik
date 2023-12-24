@@ -15,12 +15,29 @@ const user_module_1 = require("../users/user.module");
 const passport_1 = require("@nestjs/passport");
 const jwt_strategy_1 = require("./strategies/jwt.strategy");
 const token_module_1 = require("../token/token.module");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
+const todo_module_1 = require("../todos/todo.module");
 let AuthorizationModule = class AuthorizationModule {
 };
 exports.AuthorizationModule = AuthorizationModule;
 exports.AuthorizationModule = AuthorizationModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UserModule, passport_1.PassportModule, token_module_1.TokenModule],
+        imports: [
+            user_module_1.UserModule,
+            passport_1.PassportModule,
+            token_module_1.TokenModule,
+            todo_module_1.TodoModule,
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                useFactory: (configService) => ({
+                    secret: configService.get('JWT_REFRESH_SECRET_KEY'),
+                    signOptions: { expiresIn: configService.get('EXPIRES_IN') },
+                }),
+                inject: [config_1.ConfigService],
+            }),
+            config_1.ConfigModule,
+        ],
         providers: [authorization_service_1.AuthorizationService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy],
         controllers: [authorization_controller_1.AuthorizationController],
     })

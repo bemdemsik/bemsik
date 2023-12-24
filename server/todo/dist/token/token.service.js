@@ -16,10 +16,13 @@ exports.TokenService = void 0;
 const sequelize_1 = require("@nestjs/sequelize");
 const common_1 = require("@nestjs/common");
 const token_model_1 = require("./models/token.model");
+const process_1 = require("process");
 const jwt = require("jsonwebtoken");
+const config_1 = require("@nestjs/config");
 let TokenService = class TokenService {
-    constructor(tokenModel) {
+    constructor(tokenModel, configService) {
         this.tokenModel = tokenModel;
+        this.configService = configService;
     }
     async saveToken(userId, refreshToken) {
         const tokenData = await this.tokenModel.findOne({
@@ -46,22 +49,48 @@ let TokenService = class TokenService {
         return tokenData;
     }
     generateToken(name, email) {
-        const accessToken = jwt.sign({ name, email }, 'dslkjngdfng', {
+        const accessToken = jwt.sign({ name, email }, this.configService.get('JWT_ACCESS_SECRET_KEY'), {
             expiresIn: '5m',
         });
-        const refreshToken = jwt.sign({ name, email }, 'sdfdsfsdfdsfdsfsdfsdfsdfsdfgg', {
-            expiresIn: '30d',
+        const refreshToken = jwt.sign({ name, email }, this.configService.get('JWT_REFRESH_SECRET_KEY'), {
+            expiresIn: '30m',
         });
         return {
             accessToken,
             refreshToken,
         };
     }
+    async findToken(refreshToken) {
+        const tokenData = await this.tokenModel.findOne({
+            where: {
+                refreshToken,
+            },
+        });
+        return tokenData;
+    }
+    validateAssessToken(token) {
+        try {
+            const userData = jwt.verify(token, process_1.default.env.JWT_ACCESS_SECRET_KEY);
+            return userData;
+        }
+        catch (err) {
+            return null;
+        }
+    }
+    validateRefreshToken(token) {
+        try {
+            const userData = jwt.verify(token, process_1.default.env.JWT_REFRESH_SECRET_KEY);
+            return userData;
+        }
+        catch (err) {
+            return null;
+        }
+    }
 };
 exports.TokenService = TokenService;
 exports.TokenService = TokenService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(token_model_1.Token)),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, config_1.ConfigService])
 ], TokenService);
 //# sourceMappingURL=token.service.js.map

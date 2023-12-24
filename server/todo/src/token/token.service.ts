@@ -3,11 +3,13 @@ import { Injectable } from '@nestjs/common';
 import { Token } from './models/token.model';
 import process from 'process';
 import * as jwt from 'jsonwebtoken';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class TokenService {
   constructor(
     @InjectModel(Token)
     private tokenModel: typeof Token,
+    private readonly configService: ConfigService,
   ) {}
 
   async saveToken(userId: number, refreshToken: string) {
@@ -38,16 +40,16 @@ export class TokenService {
   generateToken(name: string, email: string) {
     const accessToken = jwt.sign(
       { name, email },
-      process.env.JWT_ACCESS_SECRET_KEY,
+      this.configService.get('JWT_ACCESS_SECRET_KEY'),
       {
         expiresIn: '5m',
       },
     );
     const refreshToken = jwt.sign(
       { name, email },
-      process.env.JWT_REFRESH_SECRET_KEY,
+      this.configService.get('JWT_REFRESH_SECRET_KEY'),
       {
-        expiresIn: '30d',
+        expiresIn: '30m',
       },
     );
     return {

@@ -31,11 +31,13 @@ let UserService = class UserService {
         });
     }
     async findOneByEmail(email) {
-        return this.userModel.findOne({
+        const qwe = await this.userModel.findOne({
             where: {
                 email: email,
             },
         });
+        console.log(qwe);
+        return qwe;
     }
     create(createUser) {
         const user = new user_model_1.User();

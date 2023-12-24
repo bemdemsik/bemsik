@@ -8,5 +8,5 @@ export interface LoginResponse {
   refreshToken: string;
   id: number;
 }
-export type RegisterDTO = LoginDTO & { email: string };
+export type RegisterDTO = LoginDTO & { name: string };
 export type RegisterResponse = LoginResponse;

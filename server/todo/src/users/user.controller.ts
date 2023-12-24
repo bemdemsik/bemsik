@@ -7,13 +7,10 @@ import {
   HttpStatus,
   Param,
   Post,
-  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUser } from './dto/create-user.dto';
-import { AuthMiddleware } from '../middlewares/middlewares-auth';
 @Controller('users')
-@UseInterceptors(AuthMiddleware)
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get()

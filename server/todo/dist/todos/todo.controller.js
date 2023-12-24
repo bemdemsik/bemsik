@@ -17,7 +17,6 @@ const todo_service_1 = require("./todo.service");
 const common_1 = require("@nestjs/common");
 const create_todo_dto_1 = require("./dto/create-todo.dto");
 const change_todo_dto_1 = require("./dto/change-todo.dto");
-const jwt_duard_1 = require("../authorization/guards/jwt.duard");
 let TodoController = class TodoController {
     constructor(todoService) {
         this.todoService = todoService;
@@ -78,7 +77,6 @@ __decorate([
 ], TodoController.prototype, "deleteTodo", null);
 exports.TodoController = TodoController = __decorate([
     (0, common_1.Controller)('todos'),
-    (0, common_1.UseGuards)(jwt_duard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [todo_service_1.TodoService])
 ], TodoController);
 //# sourceMappingURL=todo.controller.js.map

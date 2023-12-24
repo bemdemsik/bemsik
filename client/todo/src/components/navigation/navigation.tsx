@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import { AuthApi } from '../../api/auth';
 import './styles.css'
 import { setCookie } from 'nookies';
-import { AuthApi } from '../../api/auth';
 export const Navigation = () => {
   const logout = async () => {
+    console.log("oisdfhiusgfnosdfgihnisgubngsd")
     await AuthApi.logout();
+    setCookie(null, '_token', '')
     window.location.href = '../'
   }
   return (

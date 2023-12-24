@@ -1,15 +1,11 @@
-import {
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { CreateUser } from '../users/dto/create-user.dto';
 import { User } from '../users/modules/user.model';
 import { TokenService } from '../token/token.service';
 import * as bcrypt from 'bcrypt';
 import { UserDTO } from '../users/dto/user-dto';
-
+import * as uuid from 'uuid';
 @Injectable()
 export class AuthorizationService {
   constructor(
@@ -30,7 +26,9 @@ export class AuthorizationService {
   async register(dto: CreateUser) {
     try {
       if (await this.userService.findOneByEmail(dto.email)) {
-        throw new ForbiddenException('Пользователь с таким email уже существует',);
+        throw new UnauthorizedException(
+          'Пользователь с таким email уже существует',
+        );
       }
       const user = new User();
       user.name = dto.name;
@@ -48,8 +46,9 @@ export class AuthorizationService {
       };
       return payload;
     } catch (err) {
-      console.log(err);
-      throw new ForbiddenException('Ошибка при регистрации');
+      throw new UnauthorizedException(
+        'Ошибка при регистрации',
+      );
     }
   }
 
@@ -70,15 +69,13 @@ export class AuthorizationService {
     return payload;
   }
 
-  async logout(refreshToken: string){
+  async logout(refreshToken: string) {
     const token = await this.tokenService.removeToken(refreshToken);
     return token;
   }
 
-
   async refresh(refreshToken: string) {
-    if (!refreshToken)
-      throw new UnauthorizedException('Вы не авторизованы')
+    if (!refreshToken) throw new UnauthorizedException('Вы не авторизованы');
     const userData = this.tokenService.validateRefreshToken(refreshToken);
     const tokenFromDatabase = await this.tokenService.findToken(refreshToken);
     if (!userData || !tokenFromDatabase) {
